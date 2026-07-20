@@ -19,11 +19,16 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$scriptDir = Split-Path -Parent $PSScriptRoot
-$modulesDir = Join-Path $scriptDir 'modules'
-$binDir = Join-Path $PSScriptRoot 'bin'
+# CalypsoEngine is at $PSScriptRoot
+# CalypsoProject is parent of CalypsoEngine
+$calypsoEngine = $PSScriptRoot
+$calypsoProject = Split-Path -Parent $calypsoEngine
+$modulesDir = Join-Path $calypsoProject 'modules'
+$binDir = Join-Path $calypsoEngine 'bin'
 
 Write-Host "=== Godot 4.7 Build: $Target | $Arch ===" -ForegroundColor Cyan
+Write-Host "Engine: $calypsoEngine" -ForegroundColor Gray
+Write-Host "Modules: $modulesDir" -ForegroundColor Gray
 
 if (-not (Test-Path $modulesDir)) {
     Write-Error "modules directory not found at $modulesDir"
